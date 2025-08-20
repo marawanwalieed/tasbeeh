@@ -1,147 +1,102 @@
+
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>سبحة إلكترونية</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مسبحة الكترونية</title>
   <style>
     body {
-      font-family: 'Tahoma', sans-serif;
+      font-family: 'Arial', sans-serif;
       text-align: center;
-      background: linear-gradient(to bottom, #fdfcfb, #e2d1c3);
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 0;
     }
-
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      margin: 50px auto;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
     h1 {
-      color: #333;
-      margin-bottom: 20px;
-    }
-
-    #counter {
-      font-size: 3rem;
-      margin: 20px 0;
       color: #2c3e50;
     }
-
-    #tasbeeh-btn {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      border: none;
-      background: #3498db;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
-      transition: transform 0.2s;
-    }
-
-    #tasbeeh-btn:active {
-      transform: scale(0.9);
-      background: #2980b9;
-    }
-
-    .reset {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background: #e74c3c;
-      border: none;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 8px;
-    }
-
-    select {
-      margin: 15px 0;
-      padding: 8px;
-      font-size: 1rem;
-      border-radius: 6px;
-    }
-
-    #selected-zikr {
-      font-size: 1.2rem;
-      margin-top: 10px;
+    #count {
+      font-size: 3em;
+      margin: 20px 0;
       color: #16a085;
     }
-
-    .share {
-      margin-top: 20px;
+    button {
+      font-size: 1.2em;
       padding: 10px 20px;
-      background: #27ae60;
+      margin: 5px;
       border: none;
-      color: white;
-      font-size: 1rem;
+      border-radius: 10px;
       cursor: pointer;
-      border-radius: 8px;
+      transition: 0.3s;
+    }
+    .btn-count {
+      background-color: #27ae60;
+      color: white;
+    }
+    .btn-count:hover {
+      background-color: #2ecc71;
+    }
+    .btn-reset {
+      background-color: #c0392b;
+      color: white;
+    }
+    .btn-reset:hover {
+      background-color: #e74c3c;
+    }
+    .btn-share {
+      background-color: #2980b9;
+      color: white;
+    }
+    .btn-share:hover {
+      background-color: #3498db;
     }
   </style>
 </head>
 <body>
-  <h1>صدقة على روح المرحوم حمدي عيد سلامه الشيخ</h1>
-
-  <label for="zikr">اختر الذكر:</label>
-  <select id="zikr">
-    <option value="الحمد لله">الحمد لله</option>
-    <option value="أستغفر الله العظيم">أستغفر الله العظيم</option>
-    <option value="الله أكبر">الله أكبر</option>
-  </select>
-
-  <div id="counter">0</div>
-  <button id="tasbeeh-btn">سبح</button>
-  <button class="reset" onclick="resetCounter()">إعادة</button>
-  <div id="selected-zikr"></div>
-
-  <!-- زر المشاركة -->
-  <button class="share" onclick="shareLink()">شارك الموقع</button>
+  <div class="container">
+    <h1>✨ مسبحة الكترونية ✨</h1>
+    <div id="count">0</div>
+    <button class="btn-count" onclick="increaseCount()">تسبيح</button>
+    <button class="btn-reset" onclick="resetCount()">إعادة</button>
+    <button class="btn-share" onclick="shareLink()">📤 مشاركة</button>
+  </div>
 
   <script>
-    let count = localStorage.getItem("tasbeehCount") || 0;
-    let zikr = localStorage.getItem("zikr") || "الحمد لله";
-    const siteUrl = "https://marawanwalieed.github.io/tasbeeh/";
+    let count = 0;
 
-    document.getElementById("counter").innerText = count;
-    document.getElementById("zikr").value = zikr;
-    document.getElementById("selected-zikr").innerText = "الذكر الحالي: " + zikr;
-
-    // عند تغيير الذكر
-    document.getElementById("zikr").addEventListener("change", () => {
-      zikr = document.getElementById("zikr").value;
-      localStorage.setItem("zikr", zikr);
-      document.getElementById("selected-zikr").innerText = "الذكر الحالي: " + zikr;
-    });
-
-    // عند الضغط على زر التسبيح
-    document.getElementById("tasbeeh-btn").addEventListener("click", () => {
+    function increaseCount() {
       count++;
-      document.getElementById("counter").innerText = count;
-      localStorage.setItem("tasbeehCount", count);
-    });
-
-    // إعادة العداد
-    function resetCounter() {
-      count = 0;
-      document.getElementById("counter").innerText = count;
-      localStorage.setItem("tasbeehCount", count);
+      document.getElementById('count').textContent = count;
     }
 
-    // مشاركة اللينك
+    function resetCount() {
+      count = 0;
+      document.getElementById('count').textContent = count;
+    }
+
     function shareLink() {
+      const shareData = {
+        title: 'مسبحة الكترونية',
+        text: 'جرب المسبحة الالكترونية',
+        url: window.location.href
+      };
       if (navigator.share) {
-        // مشاركة عبر موبايل (واتساب، فيسبوك...)
-        navigator.share({
-          title: "سبحة إلكترونية",
-          text: "جرب هذه السبحة الإلكترونية صدقة على روح المرحوم حمدي عيد سلامه الشيخ",
-          url: siteUrl
-        });
+        navigator.share(shareData).catch(console.error);
       } else {
-        // في حالة الكمبيوتر (نسخ الرابط)
-        prompt("انسخ الرابط وشاركه:", siteUrl);
+        alert("انسخ الرابط: " + window.location.href);
       }
     }
   </script>
 </body>
 </html>
+    
