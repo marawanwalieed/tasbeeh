@@ -48,15 +48,22 @@
       background: #2980b9;
     }
 
-    .reset {
-      margin-top: 20px;
+    .reset, .share {
+      margin-top: 15px;
       padding: 10px 20px;
-      background: #e74c3c;
       border: none;
       color: white;
       font-size: 1rem;
       cursor: pointer;
       border-radius: 8px;
+    }
+
+    .reset {
+      background: #e74c3c;
+    }
+
+    .share {
+      background: #27ae60;
     }
 
     #zekr-select {
@@ -88,6 +95,7 @@
   <div id="counter">0</div>
   <button id="tasbeeh-btn">سبح</button>
   <button class="reset" onclick="resetCounter()">إعادة</button>
+  <button class="share" onclick="shareCounter()">مشاركة</button>
 
   <script>
     let count = localStorage.getItem("tasbeehCount") || 0;
@@ -114,6 +122,20 @@
       document.getElementById("chosen-zekr").innerText = currentZekr;
       localStorage.setItem("zekr", currentZekr);
     });
+
+    function shareCounter() {
+      const message = أنا قلت (${currentZekr}) ${count} مرة.\nصدقة على روح المرحوم حمدي عيد سلامه الشيخ.;
+      
+      if (navigator.share) {
+        navigator.share({
+          title: 'سبحة إلكترونية',
+          text: message,
+          url: window.location.href
+        });
+      } else {
+        alert("المشاركة غير مدعومة في هذا المتصفح.\nالنص:\n" + message);
+      }
+    }
   </script>
 </body>
 </html>
