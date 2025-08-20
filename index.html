@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>سبحة إلكترونية</title>
+  <style>
+    body {
+      font-family: 'Tahoma', sans-serif;
+      text-align: center;
+      background: linear-gradient(to bottom, #fdfcfb, #e2d1c3);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    #counter {
+      font-size: 3rem;
+      margin: 20px 0;
+      color: #2c3e50;
+    }
+
+    #tasbeeh-btn {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: none;
+      background: #3498db;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+    }
+
+    #tasbeeh-btn:active {
+      transform: scale(0.9);
+      background: #2980b9;
+    }
+
+    .reset {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #e74c3c;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    select {
+      margin: 15px 0;
+      padding: 8px;
+      font-size: 1rem;
+      border-radius: 6px;
+    }
+
+    #selected-zikr {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      color: #16a085;
+    }
+  </style>
+</head>
+<body>
+  <h1>صدقة على روح المرحوم حمدي عيد سلامه الشيخ</h1>
+
+  <label for="zikr">اختر الذكر:</label>
+  <select id="zikr">
+    <option value="الحمد لله">الحمد لله</option>
+    <option value="أستغفر الله العظيم">أستغفر الله العظيم</option>
+    <option value="الله أكبر">الله أكبر</option>
+  </select>
+
+  <div id="counter">0</div>
+  <button id="tasbeeh-btn">سبح</button>
+  <button class="reset" onclick="resetCounter()">إعادة</button>
+  <div id="selected-zikr"></div>
+
+  <script>
+    let count = localStorage.getItem("tasbeehCount") || 0;
+    let zikr = localStorage.getItem("zikr") || "الحمد لله";
+
+    document.getElementById("counter").innerText = count;
+    document.getElementById("zikr").value = zikr;
+    document.getElementById("selected-zikr").innerText = "الذكر الحالي: " + zikr;
+
+    // عند تغيير الذكر
+    document.getElementById("zikr").addEventListener("change", () => {
+      zikr = document.getElementById("zikr").value;
+      localStorage.setItem("zikr", zikr);
+      document.getElementById("selected-zikr").innerText = "الذكر الحالي: " + zikr;
+    });
+
+    // عند الضغط على زر التسبيح
+    document.getElementById("tasbeeh-btn").addEventListener("click", () => {
+      count++;
+      document.getElementById("counter").innerText = count;
+      localStorage.setItem("tasbeehCount", count);
+    });
+
+    // إعادة العداد
+    function resetCounter() {
+      count = 0;
+      document.getElementById("counter").innerText = count;
+      localStorage.setItem("tasbeehCount", count);
+    }
+  </script>
+</body>
+</html>
