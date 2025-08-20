@@ -1,89 +1,148 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>سبحة إلكترونية</title>
   <style>
     body {
+      font-family: 'Tahoma', sans-serif;
+      text-align: center;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       margin: 0;
-      padding: 0;
-      font-family: 'Cairo', sans-serif;
       background: url('background.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: white;
-      text-align: center;
     }
-    .container {
-      margin-top: 100px;
-    }
+
     h1 {
-      font-size: 28px;
+      color: white;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
       margin-bottom: 20px;
     }
-    select, button {
-      padding: 10px 15px;
-      font-size: 18px;
-      margin: 10px;
-      border-radius: 8px;
-      border: none;
-    }
+
     #counter {
-      font-size: 48px;
+      font-size: 3rem;
       margin: 20px 0;
+      color: #fff;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
     }
-    .tasbeeh-btn {
-      background: #4CAF50;
+
+    #tasbeeh-btn {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: none;
+      background: #3498db;
       color: white;
+      font-size: 1.5rem;
       cursor: pointer;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
     }
-    .share-btn {
-      background: #2196F3;
+
+    #tasbeeh-btn:active {
+      transform: scale(0.9);
+      background: #2980b9;
+    }
+
+    .reset, .share, .whatsapp {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
       color: white;
+      font-size: 1rem;
       cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .reset { background: #e74c3c; }
+    .share { background: #27ae60; }
+    .whatsapp { background: #25D366; }
+
+    #zekr-select {
+      margin-top: 20px;
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 8px;
+    }
+
+    #chosen-zekr {
+      margin-top: 15px;
+      font-size: 1.5rem;
+      color: yellow;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>صدقة على روح المرحوم حمدي عيد سلامة الشيخ</h1>
+  <h1>صدقة على روح المرحوم حمدي عيد سلامه الشيخ</h1>
+  
+  <select id="zekr-select">
+    <option value="الحمد لله">الحمد لله</option>
+    <option value="أستغفر الله العظيم">أستغفر الله العظيم</option>
+    <option value="الله أكبر">الله أكبر</option>
+  </select>
 
-    <!-- الكومبو بوكس -->
-    <select id="zikrSelect">
-      <option value="الحمد لله">الحمد لله</option>
-      <option value="استغفر الله العظيم">استغفر الله العظيم</option>
-      <option value="الله أكبر">الله أكبر</option>
-    </select>
+  <div id="chosen-zekr">الحمد لله</div>
 
-    <!-- العداد -->
-    <div id="counter">0</div>
-
-    <!-- زر التسبيح -->
-    <button class="tasbeeh-btn" onclick="incrementCounter()">سبح</button>
-
-    <!-- زر المشاركة -->
-    <button class="share-btn" onclick="shareLink()">مشاركة</button>
-  </div>
+  <div id="counter">0</div>
+  <button id="tasbeeh-btn">سبح</button>
+  <button class="reset" onclick="resetCounter()">إعادة</button>
+  <button class="share" onclick="shareCounter()">مشاركة</button>
+  <button class="whatsapp" onclick="shareOnWhatsapp()">مشاركة واتساب</button>
 
   <script>
-    let count = 0;
+    let count = localStorage.getItem("tasbeehCount") || 0;
+    let currentZekr = localStorage.getItem("zekr") || "الحمد لله";
 
-    function incrementCounter() {
+    document.getElementById("counter").innerText = count;
+    document.getElementById("chosen-zekr").innerText = currentZekr;
+    document.getElementById("zekr-select").value = currentZekr;
+
+    // زر التسبيح
+    document.getElementById("tasbeeh-btn").addEventListener("click", () => {
       count++;
       document.getElementById("counter").innerText = count;
+      localStorage.setItem("tasbeehCount", count);
+    });
+
+    // إعادة
+    function resetCounter() {
+      count = 0;
+      document.getElementById("counter").innerText = count;
+      localStorage.setItem("tasbeehCount", count);
     }
 
-    function shareLink() {
-      const shareData = {
-        title: 'سبحة إلكترونية',
-        text: 'جرب السبحة الإلكترونية صدقة على روح المرحوم حمدي عيد سلامة الشيخ',
-        url: 'https://marawanwalieed.github.io/tasbeeh/'
-      };
+    // تغيير الذكر
+    document.getElementById("zekr-select").addEventListener("change", (e) => {
+      currentZekr = e.target.value;
+      document.getElementById("chosen-zekr").innerText = currentZekr;
+      localStorage.setItem("zekr", currentZekr);
+    });
+
+    // مشاركة عادية (لو مدعومة)
+    function shareCounter() {
+      const message = `أنا قلت (${currentZekr}) ${count} مرة.\nصدقة على روح المرحوم حمدي عيد سلامه الشيخ.`;
+      
       if (navigator.share) {
-        navigator.share(shareData).catch(console.error);
+        navigator.share({
+          title: 'سبحة إلكترونية',
+          text: message,
+          url: window.location.href
+        });
       } else {
-        alert("المتصفح لا يدعم المشاركة التلقائية. انسخ الرابط: " + shareData.url);
+        alert("المشاركة غير مدعومة في هذا المتصفح.\nالنص:\n" + message);
       }
+    }
+
+    // مشاركة واتساب (شغالة في أي جهاز)
+    function shareOnWhatsapp() {
+      const message = `أنا قلت (${currentZekr}) ${count} مرة.\nصدقة على روح المرحوم حمدي عيد سلامه الشيخ.`;
+      const url = "https://wa.me/?text=" + encodeURIComponent(message);
+      window.open(url, "_blank");
     }
   </script>
 </body>
