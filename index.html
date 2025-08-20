@@ -1,102 +1,102 @@
-
 <!DOCTYPE html>
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مسبحة الكترونية</title>
+  <title>سبحة إلكترونية</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      text-align: center;
-      background: #f0f2f5;
       margin: 0;
       padding: 0;
+      font-family: 'Cairo', sans-serif;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
     }
-    .container {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 20px;
-      margin: 50px auto;
-      width: 90%;
-      max-width: 500px;
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
+
     h1 {
-      color: #2c3e50;
-    }
-    #count {
-      font-size: 3em;
-      margin: 20px 0;
-      color: #16a085;
-    }
-    button {
-      font-size: 1.2em;
+      margin-top: 20px;
+      font-size: 22px;
+      background: rgba(0, 0, 0, 0.5);
+      display: inline-block;
       padding: 10px 20px;
-      margin: 5px;
+      border-radius: 12px;
+    }
+
+    #counter {
+      font-size: 40px;
+      margin: 20px;
+      font-weight: bold;
+      background: rgba(0, 0, 0, 0.6);
+      display: inline-block;
+      padding: 10px 30px;
+      border-radius: 20px;
+    }
+
+    #tasbeehBtn {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(0, 123, 255, 0.8);
+      border: none;
+      font-size: 20px;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    #tasbeehBtn:hover {
+      background: rgba(0, 86, 179, 0.9);
+      transform: scale(1.05);
+    }
+
+    #shareBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
       border: none;
       border-radius: 10px;
+      background: #28a745;
+      color: white;
       cursor: pointer;
-      transition: 0.3s;
     }
-    .btn-count {
-      background-color: #27ae60;
-      color: white;
-    }
-    .btn-count:hover {
-      background-color: #2ecc71;
-    }
-    .btn-reset {
-      background-color: #c0392b;
-      color: white;
-    }
-    .btn-reset:hover {
-      background-color: #e74c3c;
-    }
-    .btn-share {
-      background-color: #2980b9;
-      color: white;
-    }
-    .btn-share:hover {
-      background-color: #3498db;
+
+    #shareBtn:hover {
+      background: #218838;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>✨ مسبحة الكترونية ✨</h1>
-    <div id="count">0</div>
-    <button class="btn-count" onclick="increaseCount()">تسبيح</button>
-    <button class="btn-reset" onclick="resetCount()">إعادة</button>
-    <button class="btn-share" onclick="shareLink()">📤 مشاركة</button>
-  </div>
+  <h1>صدقة على روح المرحوم حمدي عيد سلامة الشيخ</h1>
+  <div id="counter">0</div>
+  <br>
+  <button id="tasbeehBtn">سبح</button>
+  <br>
+  <button id="shareBtn">🔗 مشاركة</button>
 
   <script>
     let count = 0;
+    const counter = document.getElementById("counter");
+    const tasbeehBtn = document.getElementById("tasbeehBtn");
+    const shareBtn = document.getElementById("shareBtn");
 
-    function increaseCount() {
+    tasbeehBtn.addEventListener("click", () => {
       count++;
-      document.getElementById('count').textContent = count;
-    }
+      counter.textContent = count;
+    });
 
-    function resetCount() {
-      count = 0;
-      document.getElementById('count').textContent = count;
-    }
-
-    function shareLink() {
-      const shareData = {
-        title: 'مسبحة الكترونية',
-        text: 'جرب المسبحة الالكترونية',
-        url: window.location.href
-      };
+    shareBtn.addEventListener("click", () => {
       if (navigator.share) {
-        navigator.share(shareData).catch(console.error);
+        navigator.share({
+          title: "سبحة إلكترونية",
+          text: "جرب السبحة الإلكترونية صدقة جارية ❤️",
+          url: window.location.href
+        });
       } else {
-        alert("انسخ الرابط: " + window.location.href);
+        alert("المشاركة غير مدعومة في هذا المتصفح.");
       }
-    }
+    });
   </script>
 </body>
 </html>
-    
