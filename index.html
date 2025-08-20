@@ -14,89 +14,77 @@
       color: white;
       text-align: center;
     }
-
+    .container {
+      margin-top: 100px;
+    }
     h1 {
-      margin-top: 20px;
-      font-size: 22px;
-      background: rgba(0, 0, 0, 0.5);
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: 12px;
+      font-size: 28px;
+      margin-bottom: 20px;
     }
-
+    select, button {
+      padding: 10px 15px;
+      font-size: 18px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+    }
     #counter {
-      font-size: 40px;
-      margin: 20px;
-      font-weight: bold;
-      background: rgba(0, 0, 0, 0.6);
-      display: inline-block;
-      padding: 10px 30px;
-      border-radius: 20px;
+      font-size: 48px;
+      margin: 20px 0;
     }
-
-    #tasbeehBtn {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      background: rgba(0, 123, 255, 0.8);
-      border: none;
-      font-size: 20px;
-      color: white;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    #tasbeehBtn:hover {
-      background: rgba(0, 86, 179, 0.9);
-      transform: scale(1.05);
-    }
-
-    #shareBtn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 10px;
-      background: #28a745;
+    .tasbeeh-btn {
+      background: #4CAF50;
       color: white;
       cursor: pointer;
     }
-
-    #shareBtn:hover {
-      background: #218838;
+    .share-btn {
+      background: #2196F3;
+      color: white;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h1>صدقة على روح المرحوم حمدي عيد سلامة الشيخ</h1>
-  <div id="counter">0</div>
-  <br>
-  <button id="tasbeehBtn">سبح</button>
-  <br>
-  <button id="shareBtn">🔗 مشاركة</button>
+  <div class="container">
+    <h1>صدقة على روح المرحوم حمدي عيد سلامة الشيخ</h1>
+
+    <!-- الكومبو بوكس -->
+    <select id="zikrSelect">
+      <option value="الحمد لله">الحمد لله</option>
+      <option value="استغفر الله العظيم">استغفر الله العظيم</option>
+      <option value="الله أكبر">الله أكبر</option>
+    </select>
+
+    <!-- العداد -->
+    <div id="counter">0</div>
+
+    <!-- زر التسبيح -->
+    <button class="tasbeeh-btn" onclick="incrementCounter()">سبح</button>
+
+    <!-- زر المشاركة -->
+    <button class="share-btn" onclick="shareLink()">مشاركة</button>
+  </div>
 
   <script>
     let count = 0;
-    const counter = document.getElementById("counter");
-    const tasbeehBtn = document.getElementById("tasbeehBtn");
-    const shareBtn = document.getElementById("shareBtn");
 
-    tasbeehBtn.addEventListener("click", () => {
+    function incrementCounter() {
       count++;
-      counter.textContent = count;
-    });
+      document.getElementById("counter").innerText = count;
+    }
 
-    shareBtn.addEventListener("click", () => {
+    function shareLink() {
+      const shareData = {
+        title: 'سبحة إلكترونية',
+        text: 'جرب السبحة الإلكترونية صدقة على روح المرحوم حمدي عيد سلامة الشيخ',
+        url: 'https://marawanwalieed.github.io/tasbeeh/'
+      };
       if (navigator.share) {
-        navigator.share({
-          title: "سبحة إلكترونية",
-          text: "جرب السبحة الإلكترونية صدقة جارية ❤️",
-          url: window.location.href
-        });
+        navigator.share(shareData).catch(console.error);
       } else {
-        alert("المشاركة غير مدعومة في هذا المتصفح.");
+        alert("المتصفح لا يدعم المشاركة التلقائية. انسخ الرابط: " + shareData.url);
       }
-    });
+    }
   </script>
 </body>
 </html>
