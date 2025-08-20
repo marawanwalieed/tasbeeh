@@ -67,6 +67,17 @@
       margin-top: 10px;
       color: #16a085;
     }
+
+    .share {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #27ae60;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 8px;
+    }
   </style>
 </head>
 <body>
@@ -84,9 +95,13 @@
   <button class="reset" onclick="resetCounter()">إعادة</button>
   <div id="selected-zikr"></div>
 
+  <!-- زر المشاركة -->
+  <button class="share" onclick="shareLink()">شارك الموقع</button>
+
   <script>
     let count = localStorage.getItem("tasbeehCount") || 0;
     let zikr = localStorage.getItem("zikr") || "الحمد لله";
+    const siteUrl = "https://marawanwalieed.github.io/tasbeeh/";
 
     document.getElementById("counter").innerText = count;
     document.getElementById("zikr").value = zikr;
@@ -111,6 +126,21 @@
       count = 0;
       document.getElementById("counter").innerText = count;
       localStorage.setItem("tasbeehCount", count);
+    }
+
+    // مشاركة اللينك
+    function shareLink() {
+      if (navigator.share) {
+        // مشاركة عبر موبايل (واتساب، فيسبوك...)
+        navigator.share({
+          title: "سبحة إلكترونية",
+          text: "جرب هذه السبحة الإلكترونية صدقة على روح المرحوم حمدي عيد سلامه الشيخ",
+          url: siteUrl
+        });
+      } else {
+        // في حالة الكمبيوتر (نسخ الرابط)
+        prompt("انسخ الرابط وشاركه:", siteUrl);
+      }
     }
   </script>
 </body>
